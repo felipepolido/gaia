@@ -22,7 +22,7 @@ namespace gazebo
     {
 
       // Start up ROS
-      std::string name = "my_plugin_with_gazebo";
+      std::string name = "gaia_gazebo_plugin";
       int argc = 0;
       ros::init(argc, NULL, name);
 
@@ -41,9 +41,9 @@ namespace gazebo
       this->node = new ros::NodeHandle("~");
 
       // ROS Subscriber
-      this->sub = this->node->subscribe<geometry_msgs::Point>("robot_driver", 1000, &ROSModelPlugin::ROSCallback, this );
+      this->sub = this->node->subscribe<geometry_msgs::Point>("gaia_driver", 1000, &ROSModelPlugin::ROSCallback, this );
 
-      this->pub = this->node->advertise<sensor_msgs::LaserScan>("lidar",1000); 
+      this->pub = this->node->advertise<sensor_msgs::LaserScan>("gaia_lidar",1000); 
 
 
 

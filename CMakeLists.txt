@@ -17,12 +17,12 @@ include_directories(${roscpp_INCLUDE_DIRS})
 link_directories(${roscpp_LIBRARY_DIRS})
 set(CMAKE_INSTALL_RPATH "${roscpp_LIBRARY_DIRS}")
 
-add_library(my_plugin_with_gazebo SHARED my_plugin_with_gazebo.cc)
-set_target_properties(my_plugin_with_gazebo PROPERTIES COMPILE_FLAGS "${roscpp_CFLAGS_OTHER}")
+add_library(gaia_gazebo_plugin SHARED gaia_gazebo_plugin.cc)
+set_target_properties(gaia_gazebo_plugin PROPERTIES COMPILE_FLAGS "${roscpp_CFLAGS_OTHER}")
 
-set_target_properties(my_plugin_with_gazebo PROPERTIES LINK_FLAGS "${roscpp_LDFLAGS_OTHER}")
-target_link_libraries(my_plugin_with_gazebo ${roscpp_LIBRARIES})
-install (TARGETS my_plugin_with_gazebo DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/gazebo_plugins/)
+set_target_properties(gaia_gazebo_plugin PROPERTIES LINK_FLAGS "${roscpp_LDFLAGS_OTHER}")
+target_link_libraries(gaia_gazebo_plugin ${roscpp_LIBRARIES})
+install (TARGETS gaia_gazebo_plugin DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/gazebo_plugins/)
 
 
 
