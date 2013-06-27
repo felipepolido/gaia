@@ -1,0 +1,1 @@
+/home/eric/gaia/build/CMakeFiles/my_plugin_with_gazebo.dir
