@@ -1,4 +1,4 @@
-# Install script for directory: /home/viki/my_plugin
+# Install script for directory: /home/eric/gaia
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -41,7 +41,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   ENDIF()
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
    "/usr/local/lib/gazebo_plugins/libmy_plugin_with_gazebo.so")
-FILE(INSTALL DESTINATION "/usr/local/lib/gazebo_plugins" TYPE SHARED_LIBRARY FILES "/home/viki/my_plugin/build/libmy_plugin_with_gazebo.so")
+FILE(INSTALL DESTINATION "/usr/local/lib/gazebo_plugins" TYPE SHARED_LIBRARY FILES "/home/eric/gaia/build/libmy_plugin_with_gazebo.so")
   IF(EXISTS "$ENV{DESTDIR}/usr/local/lib/gazebo_plugins/libmy_plugin_with_gazebo.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/usr/local/lib/gazebo_plugins/libmy_plugin_with_gazebo.so")
     FILE(RPATH_CHANGE
@@ -60,7 +60,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/viki/my_plugin/build/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/eric/gaia/build/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/viki/my_plugin/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/eric/gaia/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

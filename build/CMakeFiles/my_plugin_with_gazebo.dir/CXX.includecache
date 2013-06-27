@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/viki/my_plugin/my_plugin_with_gazebo.cc
+/home/eric/gaia/my_plugin_with_gazebo.cc
 boost/bind.hpp
 -
 gazebo.hh
@@ -20,13 +20,13 @@ common/common.hh
 stdio.h
 -
 ros/ros.h
-/home/viki/my_plugin/ros/ros.h
+/home/eric/gaia/ros/ros.h
 std_msgs/Float64.h
-/home/viki/my_plugin/std_msgs/Float64.h
+/home/eric/gaia/std_msgs/Float64.h
 geometry_msgs/Point.h
-/home/viki/my_plugin/geometry_msgs/Point.h
+/home/eric/gaia/geometry_msgs/Point.h
 sensor_msgs/LaserScan.h
-/home/viki/my_plugin/sensor_msgs/LaserScan.h
+/home/eric/gaia/sensor_msgs/LaserScan.h
 
 /opt/ros/groovy/include/XmlRpcDecl.h
 ros/macros.h

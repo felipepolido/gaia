@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/viki/my_plugin
+CMAKE_SOURCE_DIR = /home/eric/gaia
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/viki/my_plugin/build
+CMAKE_BINARY_DIR = /home/eric/gaia/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/my_plugin_with_gazebo.dir/depend.make
@@ -48,17 +48,17 @@ include CMakeFiles/my_plugin_with_gazebo.dir/flags.make
 
 CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o: CMakeFiles/my_plugin_with_gazebo.dir/flags.make
 CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o: ../my_plugin_with_gazebo.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/my_plugin/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/eric/gaia/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o -c /home/viki/my_plugin/my_plugin_with_gazebo.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o -c /home/eric/gaia/my_plugin_with_gazebo.cc
 
 CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/viki/my_plugin/my_plugin_with_gazebo.cc > CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/eric/gaia/my_plugin_with_gazebo.cc > CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.i
 
 CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/viki/my_plugin/my_plugin_with_gazebo.cc -o CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/eric/gaia/my_plugin_with_gazebo.cc -o CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.s
 
 CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o.requires:
 .PHONY : CMakeFiles/my_plugin_with_gazebo.dir/my_plugin_with_gazebo.cc.o.requires
@@ -94,6 +94,6 @@ CMakeFiles/my_plugin_with_gazebo.dir/clean:
 .PHONY : CMakeFiles/my_plugin_with_gazebo.dir/clean
 
 CMakeFiles/my_plugin_with_gazebo.dir/depend:
-	cd /home/viki/my_plugin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/my_plugin /home/viki/my_plugin /home/viki/my_plugin/build /home/viki/my_plugin/build /home/viki/my_plugin/build/CMakeFiles/my_plugin_with_gazebo.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/eric/gaia/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/eric/gaia /home/eric/gaia /home/eric/gaia/build /home/eric/gaia/build /home/eric/gaia/build/CMakeFiles/my_plugin_with_gazebo.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/my_plugin_with_gazebo.dir/depend
 
