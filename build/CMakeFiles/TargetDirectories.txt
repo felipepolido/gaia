@@ -1,0 +1,6 @@
+/home/viki/gaia/build/CMakeFiles/clean_test_results.dir
+/home/viki/gaia/build/CMakeFiles/doxygen.dir
+/home/viki/gaia/build/gtest/CMakeFiles/gtest.dir
+/home/viki/gaia/build/gtest/CMakeFiles/gtest_main.dir
+/home/viki/gaia/build/CMakeFiles/run_tests.dir
+/home/viki/gaia/build/CMakeFiles/tests.dir
