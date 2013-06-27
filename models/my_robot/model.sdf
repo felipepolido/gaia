@@ -1,29 +1,37 @@
 <?xml version="1.0" ?>
+
 <sdf version="1.4">
+
   <model name="my_robot">
+
     <link name="chassis">
-      <pose>0 0 .1 0 0 0</pose>
+      <pose>0 0 0.625 0 0 0</pose>
+
       <collision name="collision">
         <geometry>
           <box>
-            <size>.4 .2 .1</size>
+            <size>1.5 1.5 1</size>
           </box>
         </geometry>
       </collision>
+
       <visual name="visual">
         <geometry>
           <box>
-            <size>.4 .2 .1</size>
+            <size>1.5 1.5 1</size>
           </box>
         </geometry>
       </visual>
+
       <collision name="caster_collision">
-        <pose>-0.15 0 -0.05 0 0 0</pose>
+        <pose>-0.6 0 -0.625 0 0 0</pose>
+
         <geometry>
           <sphere>
-            <radius>.05</radius>
+            <radius>.125</radius>
           </sphere>
         </geometry>
+
         <surface>
           <friction>
             <ode>
@@ -35,53 +43,61 @@
           </friction>
         </surface>
       </collision>
+
       <visual name="caster_visual">
-        <pose>-0.15 0 -0.05 0 0 0</pose>
+        <pose>-0.6 0 -0.625 0 0 0</pose>
         <geometry>
           <sphere>
-            <radius>.05</radius>
+            <radius>.125</radius>
           </sphere>
         </geometry>
       </visual>
     </link>
+
     <link name="left_wheel">
-      <pose>0.1 0.13 0.1 0 1.5707 1.5707</pose>
+      <pose>0.5 0.7 0.125 0 1.5707 1.5707</pose>
+
       <collision name="collision">
         <geometry>
           <cylinder>
-            <radius>.1</radius>
-            <length>.05</length>
+            <radius>.25</radius>
+            <length>.2</length>
           </cylinder>
         </geometry>
       </collision>
+
       <visual name="visual">
         <geometry>
           <cylinder>
-            <radius>.1</radius>
-            <length>.05</length>
+            <radius>.25</radius>
+            <length>.2</length>
           </cylinder>
         </geometry>
       </visual>
     </link>
+
     <link name="right_wheel">
-      <pose>0.1 -0.13 0.1 0 1.5707 1.5707</pose>
+      <pose>0.5 -0.7 0.125 0 1.5707 1.5707</pose>
+
       <collision name="collision">
         <geometry>
           <cylinder>
-            <radius>.1</radius>
-            <length>.05</length>
+            <radius>.25</radius>
+            <length>.2</length>
           </cylinder>
         </geometry>
       </collision>
+
       <visual name="visual">
         <geometry>
           <cylinder>
-            <radius>.1</radius>
-            <length>.05</length>
+            <radius>.25</radius>
+            <length>.2</length>
           </cylinder>
         </geometry>
       </visual>
     </link>
+
     <joint type="revolute" name="left_wheel_hinge">
       <pose>0 0 -0.03 0 0 0</pose>
       <child>left_wheel</child>
@@ -90,6 +106,7 @@
         <xyz>0 1 0</xyz>
       </axis>
     </joint>
+
     <joint type="revolute" name="right_wheel_hinge">
       <pose>0 0 0.03 0 0 0</pose>
       <child>right_wheel</child>
@@ -98,10 +115,12 @@
         <xyz>0 1 0</xyz>
       </axis>
     </joint>
+
     <include>
       <uri>model://hokuyo</uri>
       <pose>0.2 0 0.2 0 0 0</pose>
     </include>
+
     <joint name="hokuyo_joint" type="revolute">
       <child>hokuyo::link</child>
       <parent>chassis</parent>
@@ -120,5 +139,6 @@
       <gain>0.1</gain>
       <ray_sensor>laser</ray_sensor>
     </plugin>
+
   </model>
 </sdf>
