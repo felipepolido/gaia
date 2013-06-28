@@ -1,0 +1,43 @@
+<robot
+  name="19219020_xdz">
+  <link
+    name="Body">
+    <inertial>
+      <origin
+        xyz="0.021907 0.22023 0.00088485"
+        rpy="0 0 0" />
+      <mass
+        value="362.55" />
+      <inertia
+        ixx="58.556"
+        ixy="-7.2327"
+        ixz="0.11532"
+        iyy="96.713"
+        iyz="-0.2134"
+        izz="77.076" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://19219020_xdz/meshes/Body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://19219020_xdz/meshes/Body.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

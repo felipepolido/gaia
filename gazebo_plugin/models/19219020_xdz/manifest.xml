@@ -1,0 +1,6 @@
+<package>
+  <description brief="19219020_xdz">19219020_xdz</description>
+  <depend package="gazebo" />
+  <author>me</author>
+  <license>BSD</license>
+</package>
