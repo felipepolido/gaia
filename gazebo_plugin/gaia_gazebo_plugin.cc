@@ -13,6 +13,7 @@
 
 
 
+
 namespace gazebo
 {   
   class ROSModelPlugin : public ModelPlugin
@@ -52,7 +53,7 @@ namespace gazebo
       this->updateConnection = event::Events::ConnectWorldUpdateBegin(
           boost::bind(&ROSModelPlugin::OnUpdate, this));
 
-	//Added:
+  //Added:
       // Load parameters for this plugin
       if (this->LoadParams(_sdf))
       {
@@ -81,6 +82,9 @@ namespace gazebo
         this->gain =
           _sdf->GetElement("gain")->GetValueDouble();
       }
+
+
+      
 
       // Find sensor name from plugin param
       if (!_sdf->HasElement("ray_sensor"))
@@ -161,19 +165,92 @@ namespace gazebo
 
       sensor_msgs::LaserScan p;
 
-      //const sensor_msgs::LaserScan& input = boost::make_shared<sensor_msgs::LaserScan>(p);
+      int i, ja, jb;
+      double ra, rb, r, b;
+      double intensity;
 
-      p.angle_max = 2.0;
+      this->laser->SetActive(false);
 
+      math::Angle maxAngle = this->laser->GetAngleMax();
+      math::Angle minAngle = this->laser->GetAngleMin();
+
+      double maxRange = this->laser->GetRangeMax();
+      double minRange = this->laser->GetRangeMin();
+      int rayCount = this->laser->GetRayCount();
+      int rangeCount = this->laser->GetRangeCount();
+
+      /***************************************************************/
+      /*                                                             */
+      /*  point scan from laser                                      */
+      /*                                                             */
+      /***************************************************************/
+      // Add Frame Name
+      //p.header.frame_id = this->frame_name_;
+      //p.header.stamp.sec = _updateTime.sec;
+      //p.header.stamp.nsec = _updateTime.nsec;
+
+
+      double tmp_res_angle = (maxAngle.Radian() - minAngle.Radian())/((double)(rangeCount -1)); // for computing yaw
+      p.angle_min = minAngle.Radian();
+      p.angle_max = maxAngle.Radian();
+      p.angle_increment = tmp_res_angle;
+      p.time_increment  = 0; // instantaneous simulator scan
+      p.scan_time       = 0; // FIXME: what's this?
+      p.range_min = minRange;
+      p.range_max = maxRange;
+      p.ranges.clear();
+      p.intensities.clear();
+
+      // Interpolate the range readings from the rays
+      for (i = 0; i<rangeCount; i++)
+      {
+        b = (double) i * (rayCount - 1) / (rangeCount - 1);
+        ja = (int) floor(b);
+        jb = std::min(ja + 1, rayCount - 1);
+        b = b - floor(b);
+
+        assert(ja >= 0 && ja < rayCount);
+        assert(jb >= 0 && jb < rayCount);
+
+        ra = std::min(this->laser->GetLaserShape()->GetRange(ja) , maxRange-minRange); // length of ray
+        rb = std::min(this->laser->GetLaserShape()->GetRange(jb) , maxRange-minRange); // length of ray
+
+        // Range is linear interpolation if values are close,
+        // and min if they are very different
+        //if (fabs(ra - rb) < 0.10)
+          r = (1 - b) * ra + b * rb;
+        //else r = std::min(ra, rb);
+
+        // Intensity is averaged
+        intensity = 0.5*( this->laser->GetLaserShape()->GetRetro(ja)
+                        + this->laser->GetLaserShape()->GetRetro(jb));
+
+        /***************************************************************/
+        /*                                                             */
+        /*  point scan from laser                                      */
+        /*                                                             */
+        /***************************************************************/
+        //p.ranges.push_back(std::min(r + minRange + this->GaussianKernel(0,this->gaussian_noise_), maxRange));
+        p.ranges.push_back(r);
+        //p.intensities.push_back(std::max(this->hokuyo_min_intensity_,intensity + this->GaussianKernel(0,this->gaussian_noise_)));
+      }
+
+      this->laser->SetActive(true);
+
+      // send data out via ros message
       this->pub.publish(p);
 
+
     }
+
+
+
 
     void ROSCallback(const geometry_msgs::Point::ConstPtr& msg) 
     {
       ROS_INFO("subscriber got something0: [%f]", msg->x);
       ROS_INFO("subscriber got something1: [%f]", msg->y);
-	
+  
         this->leftWheelJoint->SetForce(0, double(msg->x));
         this->rightWheelJoint->SetForce(0, double(msg->y));
 
