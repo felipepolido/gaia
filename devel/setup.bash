@@ -2,4 +2,4 @@
 # generated from catkin/cmake/templates/setup.bash.in
 
 CATKIN_SHELL=bash
-. "/home/viki/gaia/devel/setup.sh"
+. "/home/e/gaia/devel/setup.sh"

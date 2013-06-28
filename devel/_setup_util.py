@@ -42,8 +42,8 @@ import platform
 import sys
 
 # environment at generation time
-CMAKE_PREFIX_PATH = '/home/viki/catkin_ws/devel;/opt/ros/groovy'.split(';')
-setup_dir = '/home/viki/gaia/devel'
+CMAKE_PREFIX_PATH = '/opt/ros/groovy'.split(';')
+setup_dir = '/home/e/gaia/devel'
 if setup_dir not in CMAKE_PREFIX_PATH:
     CMAKE_PREFIX_PATH.insert(0, setup_dir)
 CMAKE_PREFIX_PATH = os.pathsep.join(CMAKE_PREFIX_PATH)
