@@ -170,7 +170,7 @@
 		</include>
 
 		<joint name="hokuyo_joint" type="revolute">
-			<child>hokuyo::link</child>
+			<child>hokuyo_urg_04lx_ug01::link</child>
 			<parent>chassis</parent>
 			<axis>
 				<xyz>0 0 1</xyz>
