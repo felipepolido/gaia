@@ -1,57 +1,103 @@
-<?xml version="1.0" ?>
-<sdf version="1.4">
-
-<model name="19219020_xdz">
 
 
+<robot name="19219020_xdz">
+
+	<pose>0 0 1 0 0 0</pose>
 
 	<link name="Body">
+
+		<pose>0 0 0 0 0 0</pose>
+
 		<inertial>
-			<origin
-				xyz="0.021907 0.22023 0.00088485"
-				rpy="0 0 0" />
-			<mass
-				value="362.55" />
-			<inertia
-				ixx="58.556"
-				ixy="-7.2327"
-				ixz="0.11532"
-				iyy="96.713"
-				iyz="-0.2134"
-				izz="77.076" />
+			<origin xyz="0.021907 0.22023 0.00088485" rpy="0 0 0" />
+			<mass value="362.55" />
+			<inertia ixx="58.556" ixy="-7.2327" ixz="0.11532" iyy="96.713" iyz="-0.2134" izz="77.076" />
 		</inertial>
 
 
 		<visual>
-			<origin
-				xyz="0 0 0"
-				rpy="1.57079632679 0 0" />
+			<origin xyz="0 0 0" rpy="1.57079632679 0 0" />
 			<geometry>
-				<mesh
-					filename="package://19219020_xdz/meshes/Body.STL" />
+				<mesh filename="package://19219020_xdz/meshes/Body.STL" />
 			</geometry>
 
-			<material
-				name="">
-				<color
-					rgba="0.79216 0.81961 0.93333 1" />
+			<material name="">
+				<color rgba="0.79216 0.81961 0.93333 1" />
 			</material>
 		</visual>
 
 
 		<collision>
-			<origin
-				xyz="0 0 0"
-				rpy="1.57079632679 0 0" />
+			<origin xyz="0 0 0" rpy="1.57079632679 0 0" />
 			<geometry>
-				<mesh
-					filename="package://19219020_xdz/meshes/Body.STL" />
+				<mesh filename="package://19219020_xdz/meshes/Body.STL" />
 			</geometry>
 		</collision>
+
+
+
+
+		<link name = "left_drive_wheel">
+		</link>
+
+
+		<link name = "right_drive_wheel">
+		</link>
+
+
+
+
+		<link name = "left_caster_assembly">
+
+			<link name = "left_caster_wheel">
+			</link>
+
+			<link name = "left_caster_holder">
+			</link>
+
+		</link>
+
+
+		<link name = "right_caster_assembly">
+
+			<link name = "left_caster_wheel">
+			</link>
+
+			<link name = "left_caster_holder">
+			</link>
+
+		</link>
+
+
+
+
+		<link name = "grabber_assembly">
+
+			<link name = "upper_bar_arm">
+			</link>
+
+			<link name = "lower_bar_arm">
+			</link>
+
+		</link>
+
+
+
 	</link>
 
 
+	
 
 
-</model>
-</sdf>
+
+	
+
+	<!-- <joint name="joint1" type="continuous">
+		<parent link="link1"/>
+		<child link="link2"/>
+		<origin xyz="5 3 0" rpy="0 0 0" />
+	</joint> -->
+
+
+
+</robot>
