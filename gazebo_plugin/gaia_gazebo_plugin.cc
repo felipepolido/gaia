@@ -11,6 +11,13 @@
 #include "ros/ros.h"
 #include "std_msgs/Float64.h"
 #include "geometry_msgs/Point.h"
+
+
+#include "geometry_msgs/TwistWithCovarianceStamped.h"
+#include "geometry_msgs/TwistWithCovariance.h"
+#include "geometry_msgs/Twist.h"
+
+
 #include "sensor_msgs/LaserScan.h"
 
 
@@ -47,7 +54,7 @@ namespace gazebo
       this->node = new ros::NodeHandle("~");
 
       // ROS Subscriber
-      this->sub = this->node->subscribe<geometry_msgs::Point>("gaia_driver", 1000, &ROSModelPlugin::ROSCallback, this );
+      this->sub = this->node->subscribe<geometry_msgs::TwistWithCovarianceStamped>("gaia_driver", 1000, &ROSModelPlugin::ROSCallback, this );
 
       this->pub = this->node->advertise<sensor_msgs::LaserScan>("gaia_lidar",1000); 
 
@@ -189,7 +196,7 @@ namespace gazebo
       //Normal Variance for LIDAR data
       boost::mt19937 rng;
 
-      boost::normal_distribution<> nd(0.0, 0.01); //Standard Deviation of 1 cm 
+      boost::normal_distribution<> nd(0.0, this->lidar_gaussian_noise); //Standard Deviation of 1 cm 
 
       boost::variate_generator<boost::mt19937&, boost::normal_distribution<> > var_nor(rng, nd);
 
@@ -270,7 +277,21 @@ namespace gazebo
 
 
 
+    void ROSCallback(const geometry_msgs::TwistWithCovarianceStamped::ConstPtr& msg) 
+    {
 
+
+      
+      ROS_INFO("subscriber got something0: [%f]", msg->twist.twist.linear.x);
+      ROS_INFO("subscriber got something1: [%f]", msg->twist.twist.linear.y);
+  
+        //this->leftWheelJoint->SetForce(0, double(msg->twist->twist->linear->x));
+        //this->rightWheelJoint->SetForce(0, double(msg->twist->twist->linear->y));
+
+
+    }
+
+    /*
     void ROSCallback(const geometry_msgs::Point::ConstPtr& msg) 
     {
       ROS_INFO("subscriber got something0: [%f]", msg->x);
@@ -280,7 +301,7 @@ namespace gazebo
         this->rightWheelJoint->SetForce(0, double(msg->y));
 
 
-    }
+    }*/
 
     // Pointer to the model
     private: physics::ModelPtr model;
