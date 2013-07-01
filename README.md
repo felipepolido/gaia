@@ -30,8 +30,8 @@ roscd gaia
 
 subl ../../README.md &
 
-
-
+cd gazebo_plugin/build/
+cmake ..; make
 
 
 
