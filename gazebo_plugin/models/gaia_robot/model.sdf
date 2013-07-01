@@ -165,7 +165,7 @@
 		</joint>
 
 		<include>
-			<uri>model://hokuyo</uri>
+			<uri>model://hokuyo_urg_04lx_ug01</uri>
 			<pose>1.2 -0.3 0.35 0 0 0</pose>
 		</include>
 
@@ -186,6 +186,15 @@
 			<right_wheel_hinge>right_wheel_hinge</right_wheel_hinge>
 			<gain>0.1</gain>
 			<ray_sensor>laser</ray_sensor>
+
+			<lidar_gaussian_noise>0.01</lidar_gaussian_noise> 
+			<lidar_update_rate>10</lidar_update_rate>
+			<lidar_min_range>0.02</lidar_min_range>
+			<lidar_max_range>5.6</lidar_max_range>
+			<lidar_min_intensity>0</lidar_min_intensity>
+			<lidar_angle_range>4.1887902</lidar_angle_range>
+			<lidar_scan_steps>1024</lidar_scan_steps>
+
 		</plugin>
 
 	</model>

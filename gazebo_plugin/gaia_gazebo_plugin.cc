@@ -5,6 +5,9 @@
 #include <common/common.hh>
 #include <stdio.h>
 
+#include <boost/random.hpp>
+#include <boost/random/normal_distribution.hpp>
+
 #include "ros/ros.h"
 #include "std_msgs/Float64.h"
 #include "geometry_msgs/Point.h"
@@ -35,6 +38,8 @@ namespace gazebo
 
     public: void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     {
+
+
       // Store the pointer to the model
       this->model = _parent;
 
@@ -128,9 +133,21 @@ namespace gazebo
                              "right_wheel_hinge"))
         return false;
 
+
+      if (!_sdf->HasElement("lidar_gaussian_noise"))
+      {
+        ROS_INFO("Laser plugin missing <lidar_gaussian_noise>, defaults to 0.0");
+        this->lidar_gaussian_noise = 0;
+      }
+      else
+        this->lidar_gaussian_noise = _sdf->GetElement("lidar_gaussian_noise")->GetValueDouble();
+
       // success
       return true;
     }
+
+
+
 
     public: bool FindJointByParam(sdf::ElementPtr _sdf,
                                   physics::JointPtr &_joint,
@@ -168,6 +185,14 @@ namespace gazebo
       int i, ja, jb;
       double ra, rb, r, b;
       double intensity;
+
+      //Normal Variance for LIDAR data
+      boost::mt19937 rng;
+
+      boost::normal_distribution<> nd(0.0, 0.01); //Standard Deviation of 1 cm 
+
+      boost::variate_generator<boost::mt19937&, boost::normal_distribution<> > var_nor(rng, nd);
+
 
       this->laser->SetActive(false);
 
@@ -231,7 +256,7 @@ namespace gazebo
         /*                                                             */
         /***************************************************************/
         //p.ranges.push_back(std::min(r + minRange + this->GaussianKernel(0,this->gaussian_noise_), maxRange));
-        p.ranges.push_back(r);
+        p.ranges.push_back(std::min(r + minRange + var_nor(), maxRange));
         //p.intensities.push_back(std::max(this->hokuyo_min_intensity_,intensity + this->GaussianKernel(0,this->gaussian_noise_)));
       }
 
@@ -268,6 +293,8 @@ namespace gazebo
     private: physics::JointPtr rightWheelJoint;
     private: sensors::RaySensorPtr laser;
     private: double gain;
+    private: double lidar_gaussian_noise;
+
 
     // ROS Nodehandle
     private: ros::NodeHandle* node;
