@@ -283,10 +283,10 @@ namespace gazebo
 
       
       ROS_INFO("subscriber got something0: [%f]", msg->twist.twist.linear.x);
-      ROS_INFO("subscriber got something1: [%f]", msg->twist.twist.linear.y);
+      ROS_INFO("subscriber got something1: [%f]", msg->twist.twist.angular.z);
   
-        //this->leftWheelJoint->SetForce(0, double(msg->twist->twist->linear->x));
-        //this->rightWheelJoint->SetForce(0, double(msg->twist->twist->linear->y));
+      this->leftWheelJoint->SetForce(0, double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
+      this->rightWheelJoint->SetForce(0, double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
 
 
     }
