@@ -10,12 +10,13 @@
 			<inertial>
 				<mass value="362.61"/>
 				<inertia ixx="81.0" ixy="0.0" ixz="0.0" iyy="81.0" iyz="0.0" izz="113.0"/>
+				<pose>0.9 0 0.1</pose>
 			</inertial>
 
 			<collision name="collision">
 				<geometry>
 					<box>
-						<size>1.86 0.9 0.6</size>
+						<size>1.86 0.6 0.6</size>
 					</box>
 				</geometry>
 			</collision>
@@ -23,7 +24,7 @@
 			<visual name="visual">
 				<geometry>
 					<box>
-						<size>1.86 0.9 0.6</size>
+						<size>1.86 0.6 0.6</size>
 					</box>
 				</geometry>
 			</visual>
@@ -34,14 +35,14 @@
 				<geometry>
 					<sphere>
 						<radius>.125</radius>
-					</sphere>c
+					</sphere>
 				</geometry>
 
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
-							<mu2>1</mu2>
+							<mu>0</mu>
+							<mu2>0</mu2>
 							<slip1>1.0</slip1>
 							<slip2>1.0</slip2>
 						</ode>
@@ -71,8 +72,8 @@
 				<surface>
 					<friction>
 						<ode>
-							<mu>1</mu>
-							<mu2>1</mu2>
+							<mu>0</mu>
+							<mu2>0</mu2>
 							<slip1>1.0</slip1>
 							<slip2>1.0</slip2>
 						</ode>

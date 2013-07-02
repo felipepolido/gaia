@@ -44,12 +44,12 @@ def robot_driver():
 		# fake covariance until we know better
 		covariance = [1,0,0,0,0,0, 0,1,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1]
 		# to be overwritten when we decide what we want to go where
-		linear.x = 1
+		linear.x = 10
 		linear.y = 0
 		linear.z = 0
 		angular.x = 0
 		angular.y = 0
-		angular.z = 1
+		angular.z = 0
 		
 
 		# put it all together
