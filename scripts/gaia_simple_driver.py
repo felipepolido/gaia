@@ -15,41 +15,54 @@ from geometry_msgs.msg import Vector3
 
 def robot_driver():
 
-    # intiialize the publisher
-    pub = rospy.Publisher('gaia_gazebo_plugin/gaia_driver', TwistWithCovarianceStamped)
+	# intiialize the publisher
+	pub = rospy.Publisher('gaia_gazebo_plugin/gaia_driver', TwistWithCovarianceStamped)
 
-    # initalize the node
-    rospy.init_node('gaia_simple_driver')
+	# initalize the node
+	rospy.init_node('gaia_simple_driver')
 
-    while not rospy.is_shutdown():
+	while not rospy.is_shutdown():
 
-        # make a header
-        header = str(rospy.get_time())
+		# make a header
+		header = String(data = str(rospy.get_time()))
 
-        # initialize the message components
-        foo  = TwistWithCovarianceStamped()
-        bar = TwistWithCovariance()
-        baz = Twist()
-        # fake covariance until we know better
-        qux = [1,0,0,0,0,0, 0,1,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1]
-        quxx = []
-        corge = []
+		# initialize the message components
+		foo  = TwistWithCovarianceStamped()
+		bar = TwistWithCovariance()
+		baz = Twist()
+		linear = Vector3()
+		angular = Vector3()
 
-        # put it all together
-        foo.header = header
-        bar.covariance = qux
-        baz.libne
-        foo.twist = bar
+		# get some data to publish
+		# fake covariance until we know better
+		covariance = [1,0,0,0,0,0, 0,1,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1]
+		# to be overwritten when we decide what we want to go where
+		linear.x = 1
+		linear.y = 0
+		linear.z = 0
+		angular.x = 0
+		angular.y = 0
+		angular.z = 1
+		
 
+		# put it all together
+		baz.linear = linear
+		baz.angular = angular
+		
+		bar.covariance = covariance
+		bar.twist = baz
 
-        
-        rospy.loginfo(foo)
-        pub.publish(foo)
-        rospy.sleep(1.0)
+		foo.header = header
+		foo.twist = bar
+
+		# publish and log
+		rospy.loginfo(foo)
+		pub.publish(foo)
+		rospy.sleep(1.0)
 
 
 if __name__ == '__main__':
-    try:
-        robot_driver()
-    except rospy.ROSInterruptException:
-        pass
+	try:
+		robot_driver()
+	except rospy.ROSInterruptException:
+		pass
