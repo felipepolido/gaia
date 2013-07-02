@@ -56,7 +56,7 @@ namespace gazebo
       // ROS Subscriber
       this->sub = this->node->subscribe<geometry_msgs::TwistWithCovarianceStamped>("gaia_driver", 1000, &ROSModelPlugin::ROSCallback, this );
 
-      this->pub = this->node->advertise<sensor_msgs::LaserScan>("gaia_lidar",1000); 
+      this->pub = this->node->advertise<sensor_msgs::LaserScan>("base_scan",1000); 
 
 
 
@@ -81,6 +81,18 @@ namespace gazebo
 
     public: bool LoadParams(sdf::ElementPtr _sdf) 
     {
+
+
+
+/*
+      if (!_sdf->HasElement("frameName"))
+      {
+          ROS_INFO("Laser plugin missing <frameName>, defaults to /world");
+          this->frame_name_ = "/world";
+      }
+      else
+        this->frame_name_ = _sdf->GetElement("frameName")->GetValueString();
+*/
 
       // Find controller gain
       if (!_sdf->HasElement("gain"))
@@ -282,12 +294,14 @@ namespace gazebo
 
 
       
-      ROS_INFO("subscriber got something0: [%f]", msg->twist.twist.linear.x);
-      ROS_INFO("subscriber got something1: [%f]", msg->twist.twist.angular.z);
-  
-      this->leftWheelJoint->SetForce(0, double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
-      this->rightWheelJoint->SetForce(0, double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
+      ROS_INFO("Left Wheel Force : [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
+      ROS_INFO("Right Wheel Force  [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
 
+  
+      this->leftWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
+      this->rightWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
+      //this->leftWheelJoint->SetForce(0, 100);
+      //this->rightWheelJoint->SetForce(0, 100);
 
     }
 
