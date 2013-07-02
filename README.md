@@ -33,7 +33,7 @@ subl ../../README.md &
 cd gazebo_plugin/build/
 cmake ..; make
 
-
+sudo apt-get install ros-groovy-joystick-drivers
 
 
 export GAZEBO_PLUGIN_PATH=~/gaia/gazebo_plugin/build:${GAZEBO_PLUGIN_PATH}
