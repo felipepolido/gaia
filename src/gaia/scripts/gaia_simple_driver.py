@@ -10,6 +10,8 @@ from geometry_msgs.msg import TwistWithCovarianceStamped
 from geometry_msgs.msg import TwistWithCovariance
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
+from std_msgs.msg import String
+from std_msgs.msg import Header
 
 
 
@@ -21,12 +23,17 @@ def robot_driver():
 	# initalize the node
 	rospy.init_node('gaia_simple_driver')
 
-	while not rospy.is_shutdown():
+	# overhead for the Header
+	seq = 0
+	frame_id = "robot frame"
+	stopwatch = rospy.Time()
 
-		# make a header
-		header = String(data = str(rospy.get_time()))
+	while not rospy.is_shutdown():
+		
+		stamp = str(rospy.get_time())
 
 		# initialize the message components
+		header = Header()
 		foo  = TwistWithCovarianceStamped()
 		bar = TwistWithCovariance()
 		baz = Twist()
@@ -46,12 +53,20 @@ def robot_driver():
 		
 
 		# put it all together
+		# Twist
 		baz.linear = linear
 		baz.angular = angular
 		
+		# TwistWithCovariance
 		bar.covariance = covariance
 		bar.twist = baz
 
+		# Header
+		header.seq = seq
+		header.frame_id = frame_id
+		header.stamp = stopwatch.now()
+		seq = seq + 1
+		# TwistWithCovarianceStamped
 		foo.header = header
 		foo.twist = bar
 

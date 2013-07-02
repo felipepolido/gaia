@@ -3,5 +3,5 @@
 
 CATKIN_SHELL=zsh
 emulate sh # emulate POSIX
-. "/home/viki/gaia/devel/setup.sh"
+. "/home/e/gaia/devel/setup.sh"
 emulate zsh # back to zsh mode
