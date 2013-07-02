@@ -22,8 +22,6 @@ def robot_driver():
 		frame_id = "robot frame"
 		stopwatch = rospy.Time()
 
-		stamp = str(rospy.get_time())
-
 		# initialize the message components
 		header = Header()
 		foo  = TwistWithCovarianceStamped()

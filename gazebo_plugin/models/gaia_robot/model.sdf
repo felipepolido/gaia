@@ -10,13 +10,12 @@
 			<inertial>
 				<mass value="362.61"/>
 				<inertia ixx="81.0" ixy="0.0" ixz="0.0" iyy="81.0" iyz="0.0" izz="113.0"/>
-				<pose>0.9 0 0.1</pose>
 			</inertial>
 
 			<collision name="collision">
 				<geometry>
 					<box>
-						<size>1.86 0.6 0.6</size>
+						<size>1.86 0.6 0.4</size>
 					</box>
 				</geometry>
 			</collision>
@@ -24,7 +23,7 @@
 			<visual name="visual">
 				<geometry>
 					<box>
-						<size>1.86 0.6 0.6</size>
+						<size>1.86 0.6 0.4</size>
 					</box>
 				</geometry>
 			</visual>
