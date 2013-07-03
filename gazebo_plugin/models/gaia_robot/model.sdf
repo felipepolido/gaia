@@ -421,6 +421,7 @@
 		<!-- ROS plugin -->
 
 		<plugin filename="libgaia_gazebo_plugin.so" name="gaia_gazebo_plugin">
+			<frame_id>gaia</frame_id>
 			<left_wheel_hinge>left_wheel_hinge</left_wheel_hinge>
 			<right_wheel_hinge>right_wheel_hinge</right_wheel_hinge>
 			<gain>0.1</gain>
