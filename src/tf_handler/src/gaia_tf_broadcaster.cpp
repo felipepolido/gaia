@@ -31,7 +31,7 @@ int main(void){
   int argc = 0;
   ros::init(argc, NULL, "gaia_tf_broadcaster");
 
-  robot_name = "gaia";
+  robot_name = "base_link";
 
   ros::NodeHandle node;
   ros::Subscriber sub = node.subscribe("/gaia_gazebo_plugin/odom", 10, &poseCallback);
