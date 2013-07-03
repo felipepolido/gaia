@@ -8,7 +8,7 @@
 			<pose>0 0 0.625 0 0 0</pose>
 
 			<inertial>
-				<mass value="362.61"/>
+				<mass value="262.61"/>
 				<inertia ixx="81.0" ixy="0.0" ixz="0.0" iyy="81.0" iyz="0.0" izz="113.0"/>
 			</inertial>
 
@@ -27,6 +27,9 @@
 					</box>
 				</geometry>
 			</visual>
+
+
+			<!-- casters -->
 
 			<collision name="first_caster_collision">
 				<pose>0.87 0.42 -0.5 0 0 0</pose>
@@ -90,6 +93,9 @@
 			</visual>
 		</link>
 
+
+		<!-- wheels -->
+
 		<link name="left_wheel">
 			<pose>-0.6 0.42 0.23 0 1.5707 1.5707</pose>
 
@@ -112,10 +118,9 @@
 			</visual>
 
 			<inertial>
-				<mass value="5"/>
+				<mass value="15"/>
 				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
 			</inertial>
-
 		</link>
 
 		<link name="right_wheel">
@@ -140,11 +145,207 @@
 			</visual>
 
 			<inertial>
-				<mass value="5"/>
+				<mass value="15"/>
 				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
 			</inertial>
-			
 		</link>
+
+
+		<!-- keel -->
+		
+		<link name="keel">
+			<pose>0.1 0 0.15 0 0 0</pose>
+
+			<collision name="collision">
+				<geometry>
+					<sphere>
+						<radius>0.05</radius>
+					</sphere>
+				</geometry>
+			</collision>
+
+			<visual name="visual">
+				<geometry>
+					<sphere>
+						<radius>0.05</radius>
+					</sphere>
+				</geometry>
+			</visual>
+
+			<inertial>
+				<mass value="100"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</link>
+		
+
+		<!-- claw -->
+
+		<link name="claw_base">
+			<pose>0.9 0 0.45 0 0 0</pose>
+
+			<collision name="collision">
+				<geometry>
+					<box>
+						<size>0.1 0.4 0.3</size>
+					</box>
+				</geometry>
+			</collision>
+
+			<visual name="visual">
+				<geometry>
+					<box>
+						<size>0.1 0.4 0.3</size>
+					</box>
+				</geometry>
+			</visual>
+
+			<inertial>
+				<mass value="10"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</link>
+
+		<link name="claw_palm">
+			<pose>0.95 0 0.4 0 0 0</pose>
+
+			<collision name="collision">
+				<geometry>
+					<box>
+						<size>0.05 0.2 0.2</size>
+					</box>
+				</geometry>
+			</collision>
+
+			<visual name="visual">
+				<geometry>
+					<box>
+						<size>0.05 0.2 0.2</size>
+					</box>
+				</geometry>
+			</visual>
+
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</link>
+
+		<link name="claw_left">
+			<pose>1.15 0.25 0.4 0 0 -0.1</pose>
+
+			<collision name="collision">
+				<geometry>
+					<box>
+						<size>0.3 0.01 0.2</size>
+					</box>
+				</geometry>
+			</collision>
+
+			<visual name="visual">
+				<geometry>
+					<box>
+						<size>0.3 0.01 0.2</size>
+					</box>
+				</geometry>
+			</visual>
+
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</link>
+
+		<link name="claw_right">
+			<pose>1.15 -0.25 0.4 0 0 0.1</pose>
+
+			<collision name="collision">
+				<geometry>
+					<box>
+						<size>0.3 0.01 0.2</size>
+					</box>
+				</geometry>
+			</collision>
+
+			<visual name="visual">
+				<geometry>
+					<box>
+						<size>0.3 0.01 0.2</size>
+					</box>
+				</geometry>
+			</visual>
+
+			<inertial>
+				<mass value="1"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</link>
+
+
+		<!-- claw joints -->
+
+		<joint type="revolute" name="claw_chassis_mount">
+			<child>claw_base</child>s
+			<parent>chassis</parent>
+			<axis>
+				<xyz>0 1 0</xyz>
+				<limit>
+					<upper>0</upper>
+					<lower>0</lower>
+				</limit>
+			</axis>
+		</joint>
+
+		<joint type="prismatic" name="claw_palm_mount">
+			<child>claw_palm</child>
+			<parent>claw_base</parent>
+			<axis>
+				<xyz>0 0 1</xyz>
+				<limit>
+					<upper>0.5</upper>
+					<lower>0</lower>
+				</limit>
+				<dynamics>
+					<damping>1</damping>
+					<friction>1</friction>
+				</dynamics>
+			</axis>
+		</joint>
+
+		<joint type="prismatic" name="right_claw_mount">
+			<child>claw_right</child>
+			<parent>claw_palm</parent>
+			<axis>
+				<xyz>0 1 0</xyz>
+				<limit>
+					<upper>0.2</upper>
+					<lower>0</lower>
+				</limit>
+				<dynamics>
+					<damping>1</damping>
+					<friction>0.5</friction>
+				</dynamics>
+			</axis>
+		</joint>
+
+		<joint type="prismatic" name="left_claw_mount">
+			<child>claw_left</child>
+			<parent>claw_palm</parent>
+			<axis>
+				<xyz>0 -1 0</xyz>
+				<limit>
+					<upper>0.2</upper>
+					<lower>0</lower>
+				</limit>
+				<dynamics>
+					<damping>1</damping>
+					<friction>0.5</friction>
+				</dynamics>
+			</axis>
+		</joint>
+
+
+		<!-- wheel joints -->
 
 		<joint type="revolute" name="left_wheel_hinge">
 			<pose>0 0 -0.03 0 0 0</pose>
@@ -152,6 +353,10 @@
 			<parent>chassis</parent>
 			<axis>
 				<xyz>0 1 0</xyz>
+				<dynamics>
+					<damping>0.1</damping>
+					<friction>0.1</friction>
+				</dynamics>
 			</axis>
 		</joint>
 
@@ -161,8 +366,34 @@
 			<parent>chassis</parent>
 			<axis>
 				<xyz>0 1 0</xyz>
+				<dynamics>
+					<damping>0.1</damping>
+					<friction>0.1</friction>
+				</dynamics>
 			</axis>
 		</joint>
+
+
+		<!-- keel -->
+
+		<joint type="revolute" name="keel_joint">
+			<child>keel</child>
+			<parent>chassis</parent>
+			<axis>
+				<xyz>0 1 0</xyz>
+				<limit>
+					<upper>0</upper>
+					<lower>0</lower>
+				</limit>
+				<dynamics>
+					<damping>1</damping>
+					<friction>1</friction>
+				</dynamics>
+			</axis>
+		</joint>
+
+
+		<!-- lidar -->
 
 		<include>
 			<uri>model://hokuyo_urg_04lx_ug01</uri>
@@ -172,14 +403,22 @@
 		<joint name="hokuyo_joint" type="revolute">
 			<child>hokuyo_urg_04lx_ug01::link</child>
 			<parent>chassis</parent>
+			<pose>0 0 0 0 0.2 0</pose>
 			<axis>
-				<xyz>0 0 1</xyz>
+				<xyz>0 1 0</xyz>
 				<limit>
-					<upper>0</upper>
-					<lower>0</lower>
+					<upper>0.7854</upper>
+					<lower>-0.00001</lower>
 				</limit>
+				<dynamics>
+					<damping>0.1</damping>
+					<friction>0.5</friction>
+				</dynamics>
 			</axis>
 		</joint>
+
+
+		<!-- ROS plugin -->
 
 		<plugin filename="libgaia_gazebo_plugin.so" name="gaia_gazebo_plugin">
 			<left_wheel_hinge>left_wheel_hinge</left_wheel_hinge>
@@ -187,8 +426,6 @@
 			<gain>0.1</gain>
 			<ray_sensor>laser</ray_sensor>
 			<lidar_gaussian_noise>0.01</lidar_gaussian_noise> 
-
-
 		</plugin>
 
 	</model>

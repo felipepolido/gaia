@@ -2,7 +2,7 @@
 
 # gaia_simple_driver.py
 # last modified:
-# Eric Kolker, 2013.07.01
+# Eric Kolker, 2013.07.02
 
 
 import rospy
@@ -14,14 +14,14 @@ from std_msgs.msg import String
 from std_msgs.msg import Header
 from sensor_msgs.msg import Joy
 
+	
+
+
+
+
 def robot_driver():
 
-	def callback(data):
-
-		# overhead for the Header
-		frame_id = "robot frame"
-		stopwatch = rospy.Time()
-
+	def command_drive(data):
 		# initialize the message components
 		header = Header()
 		foo  = TwistWithCovarianceStamped()
@@ -41,7 +41,6 @@ def robot_driver():
 		angular.y = 0
 		angular.z = data.axes[0] * -10
 		
-
 		# put it all together
 		# Twist
 		baz.linear = linear
@@ -63,11 +62,36 @@ def robot_driver():
 		# publish and log
 		rospy.loginfo(foo)
 		pub.publish(foo)
-		# rospy.sleep(1.0)	# not now that we have it subscribing
 
 
-	# intiialize the publisher
+	def command_lidar(data):
+		how_much_rotation = Vector3()
+		how_much_rotation.x = 0
+		how_much_rotation.z = 0
+
+		# right stick up/down
+		foo = data.axes[4]
+		# take out some noise
+		foo = round(foo, 1)
+		how_much_rotation.y = foo
+
+		# publish and log
+		rospy.loginfo(how_much_rotation)
+		firin_mah_lazer.publish(how_much_rotation)
+
+
+	def callback(data):
+		command_drive(data)
+		command_lidar(data)
+
+
+	# overhead for the Headers
+	frame_id = "robot frame"
+	stopwatch = rospy.Time()
+
+	# intiialize the publishers
 	pub = rospy.Publisher('gaia_gazebo_plugin/gaia_driver', TwistWithCovarianceStamped)
+	firin_mah_lazer = rospy.Publisher('gaia_gazebo_plugin/gaia_laser_command', Vector3)
 
 	# initalize the node
 	rospy.init_node('gaia_simple_driver')
