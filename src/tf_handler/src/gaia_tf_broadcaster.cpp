@@ -14,9 +14,9 @@ void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
   transform.setOrigin( tf::Vector3(msg->pose.pose.position.x, msg->pose.pose.position.y, 0.0) );
   transform.setRotation( tf::Quaternion(msg->pose.pose.orientation.z, 0, 0,0) );
 
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", robot_name));
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", robot_name));
 
-
+/*
   static tf::TransformBroadcaster br2;
 
   tf::Transform transform2;
@@ -24,7 +24,7 @@ void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
   transform2.setRotation( tf::Quaternion(0,0,0,0) );
 
   br2.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "world", "map"));
-
+*/
   
 
 }
