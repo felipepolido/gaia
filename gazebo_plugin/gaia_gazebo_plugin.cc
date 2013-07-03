@@ -314,7 +314,7 @@ namespace gazebo
       odom.pose.pose.orientation.x = gz_pose.rot.x;
       odom.pose.pose.orientation.y = gz_pose.rot.y;
       odom.pose.pose.orientation.z = gz_pose.rot.z;
-      odom.pose.pose.orientation.w = 0;
+      odom.pose.pose.orientation.w = gz_pose.rot.w;
 
       odom.twist.twist.linear.x =0;
       odom.twist.twist.linear.y =0;

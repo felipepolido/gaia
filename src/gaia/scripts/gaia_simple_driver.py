@@ -39,7 +39,7 @@ def robot_driver():
 		linear.z = 0
 		angular.x = 0
 		angular.y = 0
-		angular.z = data.axes[0] * -10
+		angular.z = data.axes[0] * 10
 		
 		# put it all together
 		# Twist

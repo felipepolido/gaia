@@ -27,7 +27,7 @@
 			<uri>model://ground_plane</uri>
 		</include>
 		<include>
-			<uri>model://19219020_xdz</uri>
+			<uri>model://gaia_robot</uri>
 			<pose>0 0 1 0 0 0</pose>
 		</include>
 	</world>
