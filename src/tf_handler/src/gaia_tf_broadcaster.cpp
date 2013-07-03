@@ -11,10 +11,11 @@ void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
   static tf::TransformBroadcaster br;
 
   tf::Transform transform;
-  transform.setOrigin( tf::Vector3(msg->pose.pose.position.x, msg->pose.pose.position.y, 0.0) );
-  transform.setRotation( tf::Quaternion(msg->pose.pose.orientation.z, 0, 0,0) );
+  transform.setOrigin( tf::Vector3(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z) );
+  transform.setRotation( tf::Quaternion(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z,0) );
 
   br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", robot_name));
+
 
 /*
   static tf::TransformBroadcaster br2;
