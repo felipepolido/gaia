@@ -16,17 +16,14 @@ void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
 
   br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", robot_name));
 
+  tf::TransformBroadcaster chassi_lidar_br;
 
-/*
-  static tf::TransformBroadcaster br2;
+  tf::Transform chassi_lidar;
+  chassi_lidar.setOrigin( tf::Vector3(1.2, -0.3, 0.35) );
+  chassi_lidar.setRotation( tf::Quaternion(0, 0, 0, 1) );
 
-  tf::Transform transform2;
-  transform2.setOrigin( tf::Vector3(0.0,0.0,0.0) );
-  transform2.setRotation( tf::Quaternion(0,0,0,0) );
+  chassi_lidar_br.sendTransform(tf::StampedTransform(chassi_lidar, ros::Time::now(), robot_name, "lidar"));
 
-  br2.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "world", "map"));
-*/
-  
 
 }
 
@@ -38,7 +35,6 @@ int main(void){
 
   ros::NodeHandle node;
   ros::Subscriber sub = node.subscribe("/gaia_gazebo_plugin/odom", 10, &poseCallback);
-
 
   ros::spin();
   return 0;

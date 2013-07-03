@@ -235,7 +235,7 @@ namespace gazebo
       /*                                                             */
       /***************************************************************/
       // Add Frame Name
-      p.header.frame_id = this->frame_id;
+      p.header.frame_id = "/lidar";
 
       ros::Time current_time = ros::Time::now();
       p.header.stamp.sec = current_time.sec;
@@ -301,8 +301,10 @@ namespace gazebo
       nav_msgs::Odometry odom;
 
       odom.header.frame_id = this->frame_id;
-      //odom.header.stamp.sec = current_time.sec;
-      //odom.header.stamp.nsec = current_time.nsec;
+
+      current_time = ros::Time::now();
+      odom.header.stamp.sec = current_time.sec;
+      odom.header.stamp.nsec = current_time.nsec;
       odom.child_frame_id = "/chassis_odometry";
 
 
