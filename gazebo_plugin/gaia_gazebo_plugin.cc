@@ -4,6 +4,8 @@
 #include <sensors/sensors.hh>
 #include <common/common.hh>
 #include <stdio.h>
+#include <string>
+#include <vector>
 
 #include <boost/random.hpp>
 #include <boost/random/normal_distribution.hpp>
@@ -12,15 +14,17 @@
 #include "std_msgs/Float64.h"
 #include "geometry_msgs/Point.h"
 
+#include <tf/transform_broadcaster.h>
+#include <nav_msgs/Odometry.h>
+
 
 #include "geometry_msgs/TwistWithCovarianceStamped.h"
 #include "geometry_msgs/TwistWithCovariance.h"
 #include "geometry_msgs/Twist.h"
+#include "geometry_msgs/Pose.h"
 
 
 #include "sensor_msgs/LaserScan.h"
-
-
 
 
 
@@ -58,6 +62,8 @@ namespace gazebo
 
       this->pub = this->node->advertise<sensor_msgs::LaserScan>("base_scan",1000); 
 
+      this->pub_tf = this->node->advertise<nav_msgs::Odometry>("odom", 1000);
+
 
 
       // Listen to the update event. This event is broadcast every
@@ -70,8 +76,8 @@ namespace gazebo
       if (this->LoadParams(_sdf))
       {
         // testing to see if race condition exists
-        gzerr << this->leftWheelJoint->GetAngle(0) << "\n";
-        gzerr << this->rightWheelJoint->GetAngle(0) << "\n";
+        //gzerr << this->leftWheelJoint->GetAngle(0) << "\n";
+        //gzerr << this->rightWheelJoint->GetAngle(0) << "\n";
         // Listen to the update event. This event is broadcast every
         // simulation iteration.
         this->updateConnection = event::Events::ConnectWorldUpdateBegin(
@@ -83,16 +89,16 @@ namespace gazebo
     {
 
 
-
-/*
-      if (!_sdf->HasElement("frameName"))
+      // Find frame_id
+      if (!_sdf->HasElement("frame_id"))
       {
-          ROS_INFO("Laser plugin missing <frameName>, defaults to /world");
-          this->frame_name_ = "/world";
+        ROS_INFO("Laser plugin missing <frame_id>, defaults to /gaia");
+        this->frame_id = "/gaia";
       }
       else
-        this->frame_name_ = _sdf->GetElement("frameName")->GetValueString();
-*/
+        this->frame_id = _sdf->GetElement("frame_id")->GetValueString();
+
+
 
       // Find controller gain
       if (!_sdf->HasElement("gain"))
@@ -229,9 +235,11 @@ namespace gazebo
       /*                                                             */
       /***************************************************************/
       // Add Frame Name
-      //p.header.frame_id = this->frame_name_;
-      //p.header.stamp.sec = _updateTime.sec;
-      //p.header.stamp.nsec = _updateTime.nsec;
+      p.header.frame_id = this->frame_id;
+
+      ros::Time current_time = ros::Time::now();
+      p.header.stamp.sec = current_time.sec;
+      p.header.stamp.nsec = current_time.nsec;
 
 
       double tmp_res_angle = (maxAngle.Radian() - minAngle.Radian())/((double)(rangeCount -1)); // for computing yaw
@@ -285,6 +293,44 @@ namespace gazebo
       this->pub.publish(p);
 
 
+
+
+      math::Pose gz_pose = this->model->GetWorldPose();
+
+
+      nav_msgs::Odometry odom;
+
+      odom.header.frame_id = this->frame_id;
+      //odom.header.stamp.sec = current_time.sec;
+      //odom.header.stamp.nsec = current_time.nsec;
+      odom.child_frame_id = "/chassis_odometry";
+
+
+      odom.pose.pose.position.x = gz_pose.pos.x;
+      odom.pose.pose.position.y = gz_pose.pos.y;
+      odom.pose.pose.position.z = gz_pose.pos.z;
+      odom.pose.pose.orientation.x = gz_pose.rot.x;
+      odom.pose.pose.orientation.y = gz_pose.rot.y;
+      odom.pose.pose.orientation.z = gz_pose.rot.z;
+      odom.pose.pose.orientation.w = 0;
+
+      odom.twist.twist.linear.x =0;
+      odom.twist.twist.linear.y =0;
+      odom.twist.twist.linear.z =0;
+      odom.twist.twist.angular.x = 0;
+      odom.twist.twist.angular.y = 0;
+      odom.twist.twist.angular.z = 0;
+
+      double temp_covariance[36] = {0};
+      for(unsigned int t = 0; t < 6 ; t++)
+      {
+        odom.pose.covariance[t*6] = 1;
+        odom.twist.covariance[t*6] = 1;
+
+      }
+
+      this->pub_tf.publish(odom);
+      
     }
 
 
@@ -294,28 +340,17 @@ namespace gazebo
 
 
       
-      ROS_INFO("Left Wheel Force : [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
+      ROS_INFO("Left Wheel Force : [%f]", double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
       ROS_INFO("Right Wheel Force  [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
 
   
-      this->leftWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
-      this->rightWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
+      this->leftWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
+      this->rightWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
       //this->leftWheelJoint->SetForce(0, 100);
       //this->rightWheelJoint->SetForce(0, 100);
 
     }
 
-    /*
-    void ROSCallback(const geometry_msgs::Point::ConstPtr& msg) 
-    {
-      ROS_INFO("subscriber got something0: [%f]", msg->x);
-      ROS_INFO("subscriber got something1: [%f]", msg->y);
-  
-        this->leftWheelJoint->SetForce(0, double(msg->x));
-        this->rightWheelJoint->SetForce(0, double(msg->y));
-
-
-    }*/
 
     // Pointer to the model
     private: physics::ModelPtr model;
@@ -329,6 +364,7 @@ namespace gazebo
     private: sensors::RaySensorPtr laser;
     private: double gain;
     private: double lidar_gaussian_noise;
+    private: std::string frame_id;
 
 
     // ROS Nodehandle
@@ -337,6 +373,7 @@ namespace gazebo
     // ROS Subscriber
     ros::Subscriber sub;
     ros::Publisher pub;
+    ros::Publisher pub_tf;
   };
 
   // Register this plugin with the simulator
