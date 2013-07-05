@@ -27,15 +27,17 @@ void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
 
 }
 
-int main(void){
-  int argc = 0;
-  ros::init(argc, NULL, "gaia_tf_broadcaster");
+int main(int argc, char **argv){
+  ros::init(argc, argv, "gaia_tf_broadcaster");
 
   robot_name = "base_link";
 
   ros::NodeHandle node;
   ros::Subscriber sub = node.subscribe("/gaia_gazebo_plugin/odom", 10, &poseCallback);
 
+
+  
+
   ros::spin();
   return 0;
-};
+}

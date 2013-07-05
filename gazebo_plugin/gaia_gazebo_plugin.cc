@@ -58,11 +58,11 @@ namespace gazebo
       this->node = new ros::NodeHandle("~");
 
       // ROS Subscriber
-      this->sub = this->node->subscribe<geometry_msgs::TwistWithCovarianceStamped>("gaia_driver", 1000, &ROSModelPlugin::ROSCallback, this );
+      this->sub = this->node->subscribe<geometry_msgs::TwistWithCovarianceStamped>("gaia_driver", 100, &ROSModelPlugin::ROSCallback, this );
 
-      this->pub = this->node->advertise<sensor_msgs::LaserScan>("base_scan",1000); 
+      this->pub = this->node->advertise<sensor_msgs::LaserScan>("base_scan",100); 
 
-      this->pub_tf = this->node->advertise<nav_msgs::Odometry>("odom", 1000);
+      this->pub_tf = this->node->advertise<nav_msgs::Odometry>("odom", 100);
 
 
 
@@ -339,17 +339,13 @@ namespace gazebo
 
     void ROSCallback(const geometry_msgs::TwistWithCovarianceStamped::ConstPtr& msg) 
     {
-
-
       
-      ROS_INFO("Left Wheel Force : [%f]", double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
-      ROS_INFO("Right Wheel Force  [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
+      //ROS_INFO("Left Wheel Force : [%f]", double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
+      //ROS_INFO("Right Wheel Force  [%f]", double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
 
-  
       this->leftWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x - msg->twist.twist.angular.z));
       this->rightWheelJoint->SetForce(0, 5*double(msg->twist.twist.linear.x + msg->twist.twist.angular.z));
-      //this->leftWheelJoint->SetForce(0, 100);
-      //this->rightWheelJoint->SetForce(0, 100);
+
 
     }
 
