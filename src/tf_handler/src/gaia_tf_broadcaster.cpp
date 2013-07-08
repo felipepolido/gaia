@@ -8,14 +8,21 @@ std::string robot_name;
 
 
 void poseCallback(const nav_msgs::Odometry::ConstPtr& msg){
-  static tf::TransformBroadcaster br;
+  static tf::TransformBroadcaster body_br;
 
   tf::Transform transform;
+
+  ////  chassis ////
+  // tf position origin at robot origin
   transform.setOrigin( tf::Vector3(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z) );
+  // tf rotation origin at robot orientation
   transform.setRotation( tf::Quaternion(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z,msg->pose.pose.orientation.w) );
 
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", robot_name));
+  // ship it
+  body_br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", robot_name));
 
+
+  ////  lidar   ////
   tf::TransformBroadcaster chassi_lidar_br;
 
   tf::Transform chassi_lidar;
